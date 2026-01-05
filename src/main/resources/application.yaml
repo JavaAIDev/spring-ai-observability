@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: spring-ai-observability
+  threads.virtual.enabled: true
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:demo}
+      chat:
+        options:
+          model: gpt-4.1-nano
+          temperature: 0.2
+    mcp.client:
+      name: test-client
+      type: ASYNC
+      toolcallback:
+        enabled: true
+      stdio:
+        connections:
+          fileSystem:
+            command: npx
+            args:
+              - "-y"
+              - "@modelcontextprotocol/server-filesystem"
+              - "/tmp"
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: true
+        url: http://localhost:4318/v1/metrics
+    traces:
+      export:
+        enabled: true
+        url: http://localhost:4318/v1/traces
+  observations:
+    annotations:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+otel:
+  logs:
+    exporter: none
