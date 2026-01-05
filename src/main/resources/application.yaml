@@ -41,3 +41,4 @@ management:
 otel:
   logs:
     exporter: none
+  java.disabled.resource.providers: io.opentelemetry.instrumentation.resources.ProcessResourceProvider
