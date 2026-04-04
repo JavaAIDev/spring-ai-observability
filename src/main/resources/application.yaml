@@ -22,6 +22,9 @@ spring:
               - "-y"
               - "@modelcontextprotocol/server-filesystem"
               - "/tmp"
+    tools:
+      observations:
+        include-content: true
 management:
   otlp:
     metrics:
@@ -36,6 +39,7 @@ management:
     annotations:
       enabled: true
   tracing:
+    enabled: true
     sampling:
       probability: 1.0
 otel:

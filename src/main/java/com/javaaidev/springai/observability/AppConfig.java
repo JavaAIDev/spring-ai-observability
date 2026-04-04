@@ -1,7 +1,6 @@
 package com.javaaidev.springai.observability;
 
 import com.javaaidev.springai.observability.otel.ChatModelCompletionContentObservationFilter;
-import com.javaaidev.springai.observability.otel.ToolCallingContentObservationFilter;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +30,6 @@ public class AppConfig {
   @Bean
   public ChatModelCompletionContentObservationFilter chatModelCompletionContentObservationFilter() {
     return new ChatModelCompletionContentObservationFilter();
-  }
-
-  @Bean
-  public ToolCallingContentObservationFilter toolCallingContentObservationFilter() {
-    return new ToolCallingContentObservationFilter();
   }
 
   @Service

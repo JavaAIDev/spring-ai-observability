@@ -1,6 +1,6 @@
 services:
   langfuse-worker:
-    image: langfuse/langfuse-worker:3.143.0
+    image: langfuse/langfuse-worker:3.163.0
     restart: always
     depends_on: &langfuse-depends-on
       postgres:
@@ -62,7 +62,7 @@ services:
       SMTP_CONNECTION_URL: ${SMTP_CONNECTION_URL:-}
 
   langfuse-web:
-    image: langfuse/langfuse:3.143.0
+    image: langfuse/langfuse:3.163.0
     restart: always
     depends_on: *langfuse-depends-on
     ports:
@@ -102,7 +102,7 @@ services:
       start_period: 1s
 
   rustfs:
-    image: rustfs/rustfs:1.0.0-alpha.78
+    image: rustfs/rustfs:1.0.0-alpha.90
     restart: always
     entrypoint: sh
     command: -c 'mkdir -p /data/langfuse && rustfs --address ":9000" --console-address ":9001" --console-enable /data'
@@ -154,7 +154,7 @@ services:
       - langfuse_postgres_data:/var/lib/postgresql/data
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.138.0
+    image: otel/opentelemetry-collector-contrib:0.149.0
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./config/otel-collector.yaml:/etc/otel-collector.yaml
@@ -164,7 +164,7 @@ services:
       - langfuse.env
 
   prometheus:
-    image: prom/prometheus:v3.8.1
+    image: prom/prometheus:v3.11.0
     command:
       - --config.file=/etc/prometheus.yaml
       - --web.enable-remote-write-receiver

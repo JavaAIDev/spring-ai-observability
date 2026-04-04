@@ -6,11 +6,13 @@ receivers:
       http:
         endpoint: "0.0.0.0:4318"
 processors:
-  attributes/genai:
-    transforms:
-      - include: spring.ai.tool.definition.name
-        action: update
-        new_name: gen_ai.tool.name
+  transform/genai:
+    trace_statements:
+      - context: span
+        statements:
+          - set(attributes["langfuse.observation.input"], attributes["spring.ai.tool.call.arguments"]) where attributes["spring.ai.tool.call.arguments"] != nil
+          - set(attributes["langfuse.observation.output"], attributes["spring.ai.tool.call.result"]) where attributes["spring.ai.tool.call.result"] != nil
+
   batch:
 exporters:
   otlphttp/langfuse:
@@ -29,5 +31,5 @@ service:
       exporters: [ prometheus ]
     traces:
       receivers: [ otlp ]
-      processors: [ batch ]
+      processors: [ transform/genai, batch ]
       exporters: [ otlphttp/langfuse ]
