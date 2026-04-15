@@ -15,7 +15,7 @@ processors:
 
   batch:
 exporters:
-  otlphttp/langfuse:
+  langfuse:
     endpoint: "http://langfuse-web:3000/api/public/otel"
     headers:
       Authorization: "Basic ${LANGFUSE_AUTH_STRING}"
@@ -32,4 +32,4 @@ service:
     traces:
       receivers: [ otlp ]
       processors: [ transform/genai, batch ]
-      exporters: [ otlphttp/langfuse ]
+      exporters: [ langfuse ]
